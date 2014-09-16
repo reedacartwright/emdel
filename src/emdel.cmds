@@ -1,0 +1,76 @@
+/***************************************************************************
+ *   Copyright (C) 2006 by Reed A. Cartwright                              *
+ *   reed@scit.us                                                          *
+ *                                                                         *
+ *   Permission is hereby granted, free of charge, to any person obtaining *
+ *   a copy of this software and associated documentation files (the       *
+ *   "Software"), to deal in the Software without restriction, including   *
+ *   without limitation the rights to use, copy, modify, merge, publish,   *
+ *   distribute, sublicense, and/or sell copies of the Software, and to    *
+ *   permit persons to whom the Software is furnished to do so, subject to *
+ *   the following conditions:                                             *
+ *                                                                         *
+ *   The above copyright notice and this permission notice shall be        *
+ *   included in all copies or substantial portions of the Software.       *
+ *                                                                         *
+ *   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,       *
+ *   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF    *
+ *   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.*
+ *   IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR     *
+ *   OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, *
+ *   ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR *
+ *   OTHER DEALINGS IN THE SOFTWARE.                                       *
+ ***************************************************************************/
+
+/***************************************************************************
+ *    X-Helpers List                                                       *
+ ***************************************************************************/
+
+#include "xm.h"
+
+
+/***************************************************************************
+ *    X-Macro List                                                         *
+ *                                                                         *
+ *    XCMD(lname, sname, desc, type, def)                                  *
+ ***************************************************************************/
+
+XCMD((branch)(length), (t), "initial separation time",    double, 0.1)
+XCMD((indel)(rate),    (r), "initial relative rate of insertion and deletion", double, 0.1)
+XCMD((indel)(slope),   (z), "initial slope param of insertion and deletion (for zeta)",   double, 1.7)
+XCMD((indel)(mean),    (q), "initial mean of insertion and deletion (for geo)", double, 10.0)
+XCMD((ratio),          (k), "transition-transversion ratio", double, 2.0)
+XCMD((avgaln),         (a), "average alignment skeleton size", double, 1000)
+XCMD((model),          (m), "gap model", std::string, std::string("zeta"))
+XCMD((task),           (M), "analysis task mode", std::string, std::string("em"))
+XCMD((sample)(size),   (n), "sample size", int, 100)
+//XCMD((word)(size),   (w), "word size for local mode", int, 6)
+XCMD((sample)(max),       , "maximum sequence length in sample", int, 2500)
+XCMD((sample)(min),       , "minimum sequence length in sample", int, 60)
+XCMD((seq)(max),          , "exclude sequences greater than this", int, 0)
+XCMD((est)(freqs),        , "estimate residue frequncies", bool, false)
+
+
+XCMD((input),          (f), "input file", std::vector< std::string >,
+		std::vector< std::string >(1, std::string("-")) )
+
+XCMD((cycles),         (g), "number of steps to cycle", int, 50)
+XCMD((threshold),      (h), "convergence threshold for loglh", double, 1e-5)
+#ifdef WITH_PARALLEL
+XCMD((num)(workers),   (j), "number of worker threads", int, 1)
+#endif
+XCMD((scale),          (s), "scale constant for expectation", double, 512.0)
+
+XCMD((seed),              , "random number seed", unsigned int, 0)
+XCMD((help),              , "display help message", bool, false)
+XCMD((version),           , "display version information", bool, false)
+XCMD((progress),          , "how often to update progress, in secs", int, 60)
+XCMD((read)(args),        , "read arguments from file", std::string, std::string(""))
+XCMD((log),               , "output log", std::string, std::string("emdel.log"))
+XCMD((append),            , "append to output log", bool, false)
+
+/***************************************************************************
+ *    Cleanup                                                              *
+ ***************************************************************************/
+
+#include "xm.h"
